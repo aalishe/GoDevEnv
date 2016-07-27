@@ -8,11 +8,6 @@ FULL_IMG_NAME="${USERNAME}/${IMG_NAME}"
 build() {
   echo -e "\033[93;1mBuilding the image\033[0m"
   docker build -t ${FULL_IMG_NAME} .
-
-  cat  ${HOME}/.docker/config.json | tr -d '\n' | grep -q '"https://index.docker.io/.*":.*{.*"auth": ".\{1,\}"' || (
-    echo -e "\033[93;1mLogin to DockerHub as ${USERNAME}\033[0m."
-    docker login -u ${dkr_username}
-  )
 }
 
 if [[ "$1" == "--build" ]]
@@ -25,6 +20,15 @@ if [[ "$1" == "--push" ]]
 then
   # If the image is not there, build it
   docker images | grep -q ${FULL_IMG_NAME} || build
+
+  # Login to DockerHub if you are not
+  cat  ${HOME}/.docker/config.json | tr -d '\n' | grep -q '"https://index.docker.io/.*":.*{.*"auth": ".\{1,\}"' || (
+    echo -e "\033[93;1mLogin to DockerHub as ${USERNAME}\033[0m."
+    docker login -u ${dkr_username}
+  )
+
+  # Push the new image
+  echo -e "\033[93;1mPushing the new image to DockerHub\033[0m"
   docker push ${FULL_IMG_NAME}
 fi
 
