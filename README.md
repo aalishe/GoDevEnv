@@ -21,13 +21,13 @@ Execute `make` to build the image and keep it in locally.
 make
 ```
 
-To push the image use the `push` parameter:
+To push the image to DockerHub use the `push` parameter:
 
 ```bash
 make push
 ```
 
-But, if you want to build and push it is better to use the `release` parameter:
+But, if you want to build and push it to DockerHub, it is better to use the `release` parameter:
 
 ```bash
 make release
