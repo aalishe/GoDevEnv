@@ -5,20 +5,30 @@ IMG_NAME='godevenv'
 
 FULL_IMG_NAME="${USERNAME}/${IMG_NAME}"
 
-# If the image is not there, build it
-if ! docker images | grep -q ${FULL_IMG_NAME}
-then
+build() {
   echo -e "\033[93;1mBuilding the image\033[0m"
   docker build -t ${FULL_IMG_NAME} .
 
-  egrep -q '"auth": ".+"' ~/.docker/config.json || (
-    echo -e "\033[93;1mLogin to DockerHub as ${USERNAME}\033[0m"
-    docker login -u ${USERNAME}
+  cat  ${HOME}/.docker/config.json | tr -d '\n' | grep -q '"https://index.docker.io/.*":.*{.*"auth": ".\{1,\}"' || (
+    echo -e "\033[93;1mLogin to DockerHub as ${USERNAME}\033[0m."
+    docker login -u ${dkr_username}
   )
+}
 
-  # TODO: Should I push the image to DockerHub? Is there a way if it is outdated?
-  # docker push ${FULL_IMG_NAME}
+if [[ "$1" == "--build" ]]
+then
+  build
+  shift
+fi
+
+if [[ "$1" == "--push" ]]
+then
+  # If the image is not there, build it
+  docker images | grep -q ${FULL_IMG_NAME} || build
+  docker push ${FULL_IMG_NAME}
 fi
 
 echo -e "\033[93;1mRunning the container\033[0m"
 docker run --rm -it --name "${IMG_NAME}" -v "${PWD}/workspace":/root/workspace -w /root/workspace ${FULL_IMG_NAME}
+
+[[ $? -eq 125 ]] && echo -e "\033[91;1mERROR\033[0m: Build the image and (optional) push it with $0 --build [ --push ]"
