@@ -5,6 +5,7 @@ VERSION ?= latest
 VOLUMES = -v "${PWD}/workspace":/root/workspace
 WORKDIR = -w /root/workspace
 ENV 		=
+PORTS   =
 
 .PHONY: build login push run release clean
 
@@ -24,7 +25,7 @@ push: login
 
 run:
 	@echo "\033[93;1mRunning the container $(IMG_NAME)\033[0m"
-	docker run --rm -it --name $(IMG_NAME) $(VOLUMES) $(WORKDIR) $(ENV) $(USERNAME)/$(IMG_NAME):$(VERSION)
+	docker run --rm -it --name $(IMG_NAME) $(VOLUMES) $(WORKDIR) $(ENV) $(PORTS) $(USERNAME)/$(IMG_NAME):$(VERSION)
 
 release: build
 	make push -e VERSION=$(VERSION)

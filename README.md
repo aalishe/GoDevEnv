@@ -4,10 +4,10 @@ This is a docker container to learn and develop in Go language without the need 
 
 ## Who to use?
 
-To login to the container and start using Go, just execute `letItGo.sh` script. The image will be pulled (if not done before) and run the container. Next think you will see is the container prompt.
+To login to the container and start using Go, just execute `make run`. The image will be pulled (if not done before) and run the container. After that you will see the container prompt.
 
 ```bash
-$ ./letItGo.sh
+$ make run
 Running the container
 root@8dac5ea8da15:~/workspace#
 
@@ -15,23 +15,25 @@ root@8dac5ea8da15:~/workspace#
 
 ## Build and Push
 
-Execute `letItGo.sh` with the parameter `--build` to build the image and keep it in locally.
+Execute `make` to build the image and keep it in locally.
 
 ```bash
-./letItGo.sh --build
+make
 ```
 
-To push the image use the `--push` parameter:
+To push the image use the `push` parameter:
 
 ```bash
-./letItGo.sh --push
+make push
 ```
 
-The `--push` parameter will also build and push if the image is not found locally.
+But, if you want to build and deploy it is better to use the `release` parameter:
+
+```bash
+make release
+```
 
 ## Cleanup
-
-This is not implemented in the script.
 
 The container will be deleted after you exit from it. If not, list the running containers and remove it.
 
@@ -43,17 +45,25 @@ docker rm <id>
 To remove the image:
 
 ```bash
-docker rmi johandry/godevenv
-docker images
+make clean
 ```
 
 ## Customize
 
-Modify the DockerHub account and image name in the `letItGo.sh` script:
+Modify the DockerHub account and image or repository name in the `Makefile` file:
 
-```bash
-USERNAME='johandry'
-IMG_NAME='godevenv'
+```make
+USERNAME = johandry
+IMG_NAME = godevenv
 ```
 
-It is also possible to modify the user profile modifying the `.bashrc` file.
+Also the volumes to share, the working directory, any environment variable you want to set in the container and any port to map between the localhost and the container.
+
+```make
+VOLUMES = -v "${PWD}/workspace":/root/workspace
+WORKDIR = -w /root/workspace
+ENV 		= -e SOME_KEY=SOME_VALUE OTHER_KEY=OTHER_VALUE
+PORTS   = -p 8080:80
+```
+
+It is possible to modify the user profile editing the `.bashrc` file and re-building the image.
