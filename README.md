@@ -1,8 +1,8 @@
 # Go Language Development and Learning Environment
 
-This is a docker container to learn and develop in Go language without the need to install Go in your computer. It can also be used - eventually - to containerize your Go application.
+This is a docker container to learn and develop in Go language without the need to install Go in your computer. It can also be used - eventually - to dockerize your Go application.
 
-## Who to use?
+## How to use?
 
 To login to the container and start using Go, just execute `make run`. The image will be pulled (if not done before) and run the container. After that you will see the container prompt.
 
