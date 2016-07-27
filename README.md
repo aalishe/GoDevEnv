@@ -27,7 +27,7 @@ To push the image use the `push` parameter:
 make push
 ```
 
-But, if you want to build and deploy it is better to use the `release` parameter:
+But, if you want to build and push it is better to use the `release` parameter:
 
 ```bash
 make release
