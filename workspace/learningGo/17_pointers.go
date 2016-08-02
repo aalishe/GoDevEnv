@@ -1,5 +1,7 @@
 package main
 
+/* Example #17: https://gobyexample.com/pointers */
+
 import "fmt"
 
 func zeroval(ival int) {

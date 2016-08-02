@@ -1,5 +1,7 @@
 package main
 
+/* Example #13: https://gobyexample.com/multiple-return-values */
+
 import "fmt"
 
 func vals() (int, int) {

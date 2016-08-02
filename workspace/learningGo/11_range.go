@@ -1,5 +1,7 @@
 package main
 
+/* Example #11: https://gobyexample.com/range */
+
 import "fmt"
 
 func main() {

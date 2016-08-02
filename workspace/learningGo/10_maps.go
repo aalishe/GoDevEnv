@@ -1,5 +1,7 @@
 package main
 
+/* Example #10: https://gobyexample.com/maps */
+
 import "fmt"
 
 func main() {

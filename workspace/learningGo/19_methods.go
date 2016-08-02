@@ -1,5 +1,7 @@
 package main
 
+/* Example #19: https://gobyexample.com/methods */
+
 import "fmt"
 
 type rect struct {

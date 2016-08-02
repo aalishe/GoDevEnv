@@ -1,5 +1,7 @@
 package main
 
+/* Example #18: https://gobyexample.com/structs */
+
 import "fmt"
 
 type person struct {

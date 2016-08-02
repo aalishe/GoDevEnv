@@ -1,5 +1,7 @@
 package main
 
+/* Example #08: https://gobyexample.com/arrays */
+
 import "fmt"
 
 func main() {

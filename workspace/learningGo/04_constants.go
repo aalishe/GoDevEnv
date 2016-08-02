@@ -1,5 +1,7 @@
 package main
 
+/* Example #04: https://gobyexample.com/constants */
+
 import "fmt"
 import "math"
 

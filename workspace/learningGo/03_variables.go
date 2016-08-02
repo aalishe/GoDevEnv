@@ -1,5 +1,7 @@
 package main
 
+/* Example #03: https://gobyexample.com/variables */
+
 import "fmt"
 
 func main() {

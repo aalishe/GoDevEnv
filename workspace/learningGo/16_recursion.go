@@ -1,5 +1,7 @@
 package main
 
+/* Example #16: https://gobyexample.com/recursion */
+
 import "fmt"
 
 func fact(n int) int {

@@ -1,5 +1,7 @@
 package main
 
+/* Example #06: https://gobyexample.com/if-else */
+
 import "fmt"
 
 func main() {

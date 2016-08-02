@@ -1,5 +1,7 @@
 package main
 
+/* Example #20: https://gobyexample.com/interfaces */
+
 import "fmt"
 import "math"
 

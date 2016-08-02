@@ -1,5 +1,7 @@
 package main
 
+/* Example #15: https://gobyexample.com/closures */
+
 import "fmt"
 
 func intSeq() func() int {

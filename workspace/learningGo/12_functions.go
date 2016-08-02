@@ -1,5 +1,7 @@
 package main
 
+/* Example #12: https://gobyexample.com/functions */
+
 import "fmt"
 
 func plus(a int, b int) int {

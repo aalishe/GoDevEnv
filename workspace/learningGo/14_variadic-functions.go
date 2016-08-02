@@ -1,5 +1,7 @@
 package main
 
+/* Example #14: https://gobyexample.com/variadic-functions */
+
 import "fmt"
 
 func sum(nums ...int) {

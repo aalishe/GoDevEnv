@@ -1,5 +1,7 @@
 package main
 
+/* Example #07: https://gobyexample.com/switch */
+
 import "fmt"
 import "time"
 
