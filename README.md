@@ -13,6 +13,8 @@ root@8dac5ea8da15:~/workspace#
 
 ```
 
+For more options continue reading or execute `make help`.
+
 ## Build and Push
 
 Execute `make` to build the image and keep it in locally.
@@ -62,8 +64,14 @@ Also the volumes to share, the working directory, any environment variable you w
 ```make
 VOLUMES = -v "${PWD}/workspace":/root/workspace
 WORKDIR = -w /root/workspace
-ENV 		= -e SOME_KEY=SOME_VALUE OTHER_KEY=OTHER_VALUE
+ENV     = -e SOME_KEY=SOME_VALUE OTHER_KEY=OTHER_VALUE
 PORTS   = -p 8080:80
 ```
 
-It is possible to modify the user profile editing the `.bashrc` file and re-building the image.
+If you need more packages in the container, modify the `PACKAGES` environment variable in the Dockerfile.
+
+```docker
+ENV PACKAGES 'vim less lynx links'
+```
+
+It is possible to modify the user profile editing the `.bashrc` file. A modification to this file and the Dockerfile will require re-building the image.

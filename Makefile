@@ -1,3 +1,27 @@
+#=======================================================================================================
+# Author: Johandry Amador <johandry@gmail.com>
+# Title:  Makefile to build, push to DockerHub, run and clean a container for Go
+#
+# Usage: make <option>
+#
+# Options:
+#     help      Print this help
+#     run       Startup the container using the image from DockerHub or locally builded.
+#     build     Build the image
+#     push      Login to DockerHub (if you are not) and push the existing image
+#     release   Build and Push the recently created image
+#     clean     Remove every image stored related to Go
+#
+# Description:
+#     Execute 'make run' to startup the Go container and start developing. Make
+#     will download the latest image from DockerHub.
+#     If you modify the Dockerfile or anything on the imgage, then execute
+#     'make build' or 'make release'.
+#     When you finish, you may clean up everything with 'make clean'.
+#
+# More information, report Issues or create Pull Requests in http://github.com/johandry/GoDevEnv
+#=======================================================================================================
+
 USERNAME = johandry
 IMG_NAME = godevenv
 VERSION ?= latest
@@ -7,7 +31,7 @@ WORKDIR = -w /root/workspace
 ENV 		=
 PORTS   =
 
-.PHONY: build login push release run clean
+.PHONY: build login push release run clean help
 
 build:
 	@echo "\033[93;1mBuilding the image $(USERNAME)/$(IMG_NAME):$(VERSION)\033[0m"
@@ -33,5 +57,8 @@ clean:
 	@echo "\033[93;1mDeleting the created images\033[0m"
 	docker rmi $(USERNAME)/$(IMG_NAME):$(VERSION)
 	docker rmi `grep ^FROM Dockerfile | cut -d\  -f2`
+
+help:
+	@sed -ne '/^# Usage/,/^# More/p' Makefile | sed -e 's/^#\(.*\)/\1/' | sed -e 's/^ \(.*\)/\1/'
 
 default: build
