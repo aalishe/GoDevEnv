@@ -8,7 +8,7 @@ To login to the container and start using Go, just execute `make run`. The image
 
 ```bash
 $ make run
-Running the container
+Running the container godevenv
 root@8dac5ea8da15:~/workspace#
 
 ```
@@ -19,18 +19,23 @@ For more options continue reading or execute `make help`.
 
 To have a second, third, or Nth terminal, execute `make run` again. The `make run` is used to start up the container for the first time but if used again in other terminal will login to the container. This is useful to have a console when a process is running in the container.
 
+```bash
+make run
+Login to the existing container godevenv
+root@92f064f5cf3f:~/workspace# tail -f /tmp/output
+```
+
 Sometimes there is no need to login into the container to execute a command. That can be done with `make exec` and the command(s) to execute.
 
 ```bash
-# Assuming there is a container running a process:
 make exec tail /tmp/output
 ```
 
-However, if the command's parameters use dashed (- or --) then quote them.
+However, if the command's parameters use dashes (- or --), redirects (< or >), etc... then quote them.
 
 ```bash
 # Assuming there is a container running a process:
-make exec tail -f /tmp/output
+make exec 'tail -f /tmp/output | grep ERROR'
 ```
 
 ## Build and Push

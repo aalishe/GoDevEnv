@@ -21,6 +21,7 @@ func main() {
   }()
 
   fmt.Println("Awaiting signal")
+  fmt.Println("From another terminal kill the process with -2 and -15 (default)")
   <-done
   fmt.Println("Exiting")
 }
