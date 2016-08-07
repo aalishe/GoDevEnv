@@ -15,6 +15,24 @@ root@8dac5ea8da15:~/workspace#
 
 For more options continue reading or execute `make help`.
 
+## Another terminal and execute commands
+
+To have a second, third, or Nth terminal, execute `make run` again. The `make run` is used to start up the container for the first time but if used again in other terminal will login to the container. This is useful to have a console when a process is running in the container.
+
+Sometimes there is no need to login into the container to execute a command. That can be done with `make exec` and the command(s) to execute.
+
+```bash
+# Assuming there is a container running a process:
+make exec tail /tmp/output
+```
+
+However, if the command's parameters use dashed (- or --) then quote them.
+
+```bash
+# Assuming there is a container running a process:
+make exec tail -f /tmp/output
+```
+
 ## Build and Push
 
 Execute `make` to build the image and keep it in locally.

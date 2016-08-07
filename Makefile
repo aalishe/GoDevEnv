@@ -7,6 +7,7 @@
 # Options:
 #     help      Print this help
 #     run       Startup the container using the image from DockerHub or locally builded.
+#     exec cmd  Execute the command 'cmd' into the container and exit.
 #     build     Build the image
 #     push      Login to DockerHub (if you are not) and push the existing image
 #     release   Build and Push the recently created image
@@ -31,7 +32,15 @@ WORKDIR = -w /root/workspace
 ENV 		=
 PORTS   =
 
-.PHONY: build login push release run clean help
+.PHONY: build login push release run exec clean help
+
+# If the first argument is "exec"...
+ifeq (exec,$(firstword $(MAKECMDGOALS)))
+  # use the rest as arguments for "exec"
+  EXEC_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  # ...and turn them into do-nothing targets
+  $(eval $(EXEC_ARGS):;@:)
+endif
 
 build:
 	@echo "\033[93;1mBuilding the image $(USERNAME)/$(IMG_NAME):$(VERSION)\033[0m"
@@ -49,9 +58,18 @@ push: login
 
 release: build push
 
+exec:
+	@echo "\033[93;1mExecuting $(EXEC_ARGS) into the existing container $(IMG_NAME)\033[0m"
+	docker exec -it $(IMG_NAME) $(EXEC_ARGS)
+
 run:
-	@echo "\033[93;1mRunning the container $(IMG_NAME)\033[0m"
-	docker run --rm -it --name $(IMG_NAME) $(VOLUMES) $(WORKDIR) $(ENV) $(PORTS) $(USERNAME)/$(IMG_NAME):$(VERSION)
+	@if docker ps | grep -q godevenv; then \
+		echo "\033[93;1mLogin to the existing container $(IMG_NAME)\033[0m"; \
+		docker exec -it $(IMG_NAME) /bin/bash --login; \
+	else \
+		echo "\033[93;1mRunning the container $(IMG_NAME)\033[0m"; \
+		docker run --rm -it --name $(IMG_NAME) $(VOLUMES) $(WORKDIR) $(ENV) $(PORTS) $(USERNAME)/$(IMG_NAME):$(VERSION); \
+	fi
 
 clean:
 	@echo "\033[93;1mDeleting the created images\033[0m"
