@@ -16,5 +16,9 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+# Go alias
+alias gb='go build'
+alias gr='go run'
+
 GOPATH=/go
 PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
