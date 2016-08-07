@@ -5,6 +5,9 @@
 # PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
 # umask 022
 
+# Avoid dircolor warning
+export SHELL=/bin/bash
+
 export LS_OPTIONS='--color=auto'
 eval "`dircolors`"
 alias ls='ls $LS_OPTIONS'
