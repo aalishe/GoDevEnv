@@ -80,3 +80,5 @@ help:
 	@sed -ne '/^# Usage/,/^# More/p' Makefile | sed -e 's/^#\(.*\)/\1/' | sed -e 's/^ \(.*\)/\1/'
 
 default: build
+
+all: release run

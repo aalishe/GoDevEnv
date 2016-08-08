@@ -58,6 +58,12 @@ But, if you want to build and push it to DockerHub, it is better to use the `rel
 make release
 ```
 
+And, there is also `make all` which is going to build, push and finally run.
+
+```bash
+make all
+```
+
 ## Cleanup
 
 The container will be deleted after you exit from it. If not, list the running containers and remove it.
@@ -97,4 +103,4 @@ If you need more packages in the container, modify the `PACKAGES` environment va
 ENV PACKAGES 'vim less lynx links'
 ```
 
-It is possible to modify the user profile editing the `.bashrc` file. A modification to this file and the Dockerfile will require re-building the image.
+It is possible to modify the user profile editing the `.bashrc` file. A modification to this file or to the Dockerfile will require re-building the image.
