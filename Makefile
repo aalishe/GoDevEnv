@@ -32,7 +32,7 @@ WORKDIR = -w /root/workspace
 ENV 		=
 PORTS   =
 
-.PHONY: build login push release run exec clean help
+.PHONY: build login push release run exec clean help all
 
 # If the first argument is "exec"...
 ifeq (exec,$(firstword $(MAKECMDGOALS)))
@@ -71,6 +71,8 @@ run:
 		docker run --rm -it --name $(IMG_NAME) $(VOLUMES) $(WORKDIR) $(ENV) $(PORTS) $(USERNAME)/$(IMG_NAME):$(VERSION); \
 	fi
 
+all: release run
+
 clean:
 	@echo "\033[93;1mDeleting the created images\033[0m"
 	docker rmi $(USERNAME)/$(IMG_NAME):$(VERSION)
@@ -80,5 +82,3 @@ help:
 	@sed -ne '/^# Usage/,/^# More/p' Makefile | sed -e 's/^#\(.*\)/\1/' | sed -e 's/^ \(.*\)/\1/'
 
 default: build
-
-all: release run
