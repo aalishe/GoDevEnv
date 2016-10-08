@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+  app:
+    image: golang:latest
+    volumes:
+      - .:/go/src/GoWithCompose
+    working_dir: /go/src/GoWithCompose
+    command: go run main.go
+    links:
+      - redis
+
+  redis:
+    image: redis:alpine

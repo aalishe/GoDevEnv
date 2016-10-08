@@ -25,12 +25,16 @@
 
 USERNAME = johandry
 IMG_NAME = godevenv
-VERSION ?= latest
+VERSION ?= $(cat VERSION)
 
-VOLUMES = -v "${PWD}/workspace":/root/workspace
-WORKDIR = -w /root/workspace
+# From the base image (https://hub.docker.com/_/golang/)
+GOPATH=/go
+
+VOLUMES = -v "${PWD}/workspace":${GOPATH}
+WORKDIR = -w ${GOPATH}
 ENV 		=
 PORTS   =
+#PORTS   = -p 127.0.0.1:6060:6060
 
 .PHONY: build login push release run exec clean help all
 
@@ -44,7 +48,17 @@ endif
 
 build:
 	@echo "\033[93;1mBuilding the image $(USERNAME)/$(IMG_NAME):$(VERSION)\033[0m"
-	docker build --rm -t $(USERNAME)/$(IMG_NAME):$(VERSION) .
+	git pull
+	docker build --rm -t $(USERNAME)/$(IMG_NAME):latest .
+
+tag:
+	@echo "\033[93;1mTagging the new image with version $(VERSION)\033[0m"
+	git add -A
+	git commit -am "Version: $(VERSION)"
+	git tag -a "$(VERSION)" -m "Version: $(VERSION)"
+	git push
+	git push --tags
+	docker tag $(USERNAME)/$(IMG_NAME):latest $(USERNAME)/$(IMG_NAME):$(VERSION)
 
 login:
 	@if ! docker info | grep -q 'Username: $(USERNAME)'; then \
@@ -54,9 +68,10 @@ login:
 
 push: login
 	@echo "\033[93;1mPushing the new image to DockerHub\033[0m"
+	docker push $(USERNAME)/$(IMG_NAME):latest
 	docker push $(USERNAME)/$(IMG_NAME):$(VERSION)
 
-release: build push
+release: build tag push
 
 exec:
 	@echo "\033[93;1mExecuting $(EXEC_ARGS) into the existing container $(IMG_NAME)\033[0m"
