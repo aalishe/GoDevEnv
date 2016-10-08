@@ -25,7 +25,7 @@
 
 USERNAME = johandry
 IMG_NAME = godevenv
-VERSION ?= $(cat VERSION)
+VERSION := $(shell cat VERSION)
 
 # From the base image (https://hub.docker.com/_/golang/)
 GOPATH=/go
