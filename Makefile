@@ -36,7 +36,7 @@ ENV 		=
 PORTS   =
 #PORTS   = -p 127.0.0.1:6060:6060
 
-.PHONY: build login push release run exec clean help all
+.PHONY: build tag login push release run exec clean help all
 
 # If the first argument is "exec"...
 ifeq (exec,$(firstword $(MAKECMDGOALS)))
